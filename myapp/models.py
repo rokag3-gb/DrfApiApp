@@ -2,15 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class mClass(models.Model):
-    class Meta:
-        db_table = 'class'
-        verbose_name = '수업'
-        verbose_name_plural = '수업'
-    
-    def __str__(self):  # admin에서 표시될 user 필드 정보 설정
-        return self.title
-    
+class bf_Class(models.Model):
     title = models.CharField(max_length=100, verbose_name='제목')
     place = models.CharField(max_length=300, verbose_name='장소')
     
@@ -26,9 +18,17 @@ class mClass(models.Model):
         c15 = 150000, '15만원'
     
     kind = models.CharField(max_length=10, choices=KindChoices.choices, verbose_name='종류')
-    credit = models.IntegerField(choices=CreditChoices.choices, null=False, verbose_name='수업 가격(credit)')
+    credit = models.IntegerField(choices=CreditChoices.choices, null=True, verbose_name='수업 가격(credit)')
     max_count = models.IntegerField(verbose_name='수업 정원')
     date = models.DateField(verbose_name='수업일')
     stime = models.TimeField(verbose_name='수업 시작시간')
     etime = models.TimeField(verbose_name='수업 종료시간')
     remark = models.TextField(max_length=1000, blank=True)
+
+    class Meta:
+        db_table = 'bf_Class'
+        verbose_name = '수업'
+        verbose_name_plural = '수업'
+
+    def __str__(self):  # Django admin에서 표시될 필드 설정
+        return self.title
