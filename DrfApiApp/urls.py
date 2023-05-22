@@ -22,6 +22,7 @@ from rest_framework import routers
 #from DrfApiApp.myapp import views
 from myapp.views import ClassListAPI, ClassDetail
 from myapp.views import UserCreditListAPI, UserCreditDetail
+from myapp.views import BookListAPI, BookDetail
 
 #router = routers.DefaultRouter()
 #router.register(r'users', views.UserViewSet)
@@ -35,6 +36,8 @@ urlpatterns = [
     path(api_ver + '/class/<int:pk>/', ClassDetail.as_view()),
     path(api_ver + '/usercredit/', UserCreditListAPI.as_view()),
     path(api_ver + '/usercredit/<int:pk>/', UserCreditDetail.as_view()),
+    path(api_ver + '/book/', BookListAPI.as_view()),
+    path(api_ver + '/book/<int:pk>/', BookDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

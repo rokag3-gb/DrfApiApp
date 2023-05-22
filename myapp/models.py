@@ -45,7 +45,7 @@ class bf_Class(models.Model):
 ###################################################################################################
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, db_column="user_id")
     phone_number = models.CharField(max_length=100, blank=True, null=True, verbose_name='연락처')
     birth_date = models.DateField(null=True, blank=True, verbose_name='생년월일')
 
@@ -100,19 +100,29 @@ class bf_UserCredit(models.Model):
 
 ###################################################################################################
 
-# class bf_Book(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     book_date = models.DateField(blank=False, null=False, verbose_name='수업 예약일')
-#     user_id = models.IntegerField(blank=False, null=False, default=1, verbose_name='user_id')
-#     #class_id
+class bf_Book(models.Model):
+    id = models.AutoField(primary_key=True)
+    book_date = models.DateTimeField(blank=False, null=False, verbose_name='예약일')
+    
+    # user_id = models.ForeignKey("auth_user", related_name="user", on_delete=models.CASCADE, db_column="user_id")
+    # user_id = models.IntegerField(blank=False, null=False, verbose_name='user_id')
+    # class_id = models.IntegerField(blank=False, null=False, verbose_name='class_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column="user_id")
+    class_id = models.ForeignKey(bf_Class, on_delete=models.CASCADE, db_column="class_id")
 
-#     class Meta:
-#         db_table = 'bf_Book'
-#         verbose_name = 'Book'
-#         verbose_name_plural = 'Book'
+    enable = models.BooleanField(default=True, null=False, verbose_name='활성')
+    spent_credit = models.IntegerField(blank=False, null=False, verbose_name='차감된 크레딧')
 
-#     def __str__(self):  # Django admin에서 표시될 필드 설정
-#         return str(self.pk) + ' / ' + self.title + ' / ' + self.place + ' / ' + self.date.strftime("%Y-%m-%d")
+    cancel_date = models.DateTimeField(blank=True, null=True, verbose_name='예약취소일')
+    refund_credit = models.IntegerField(blank=True, null=True, verbose_name='환불된 크레딧')
+
+    class Meta:
+        db_table = 'bf_Book'
+        verbose_name = 'Book'
+        verbose_name_plural = 'Book'
+
+    # def __str__(self):  # Django admin에서 표시될 필드 설정
+    #     return str(self.pk) + ' / ' + self.title + ' / ' + self.place + ' / ' + self.date.strftime("%Y-%m-%d")
 
 ###################################################################################################
 
