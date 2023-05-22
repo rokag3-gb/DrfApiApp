@@ -16,7 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
+#from django.urls import include, path
+from rest_framework import routers
+#from DrfApiApp.myapp import views
+from myapp.views import ClassListAPI, ClassDetail
+from myapp.views import UserCreditListAPI, UserCreditDetail
+
+#router = routers.DefaultRouter()
+#router.register(r'users', views.UserViewSet)
+#router.register(r'groups', views.GroupViewSet)
+
+api_ver='api/v1'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(api_ver + '/class/', ClassListAPI.as_view()),
+    path(api_ver + '/class/<int:pk>/', ClassDetail.as_view()),
+    path(api_ver + '/usercredit/', UserCreditListAPI.as_view()),
+    path(api_ver + '/usercredit/<int:pk>/', UserCreditDetail.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
