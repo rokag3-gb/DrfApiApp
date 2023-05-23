@@ -45,7 +45,7 @@ class bf_Class(models.Model):
 ###################################################################################################
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, db_column="user_id")
+    user = models.OneToOneField(User, related_name="User", on_delete=models.CASCADE, db_column="user_id")
     phone_number = models.CharField(max_length=100, blank=True, null=True, verbose_name='연락처')
     birth_date = models.DateField(null=True, blank=True, verbose_name='생년월일')
 
@@ -53,6 +53,9 @@ class Profile(models.Model):
         db_table = 'Profile'
         verbose_name = 'Profile'
         verbose_name_plural = 'Profile'
+
+    def __str__(self):  # Django admin에서 표시될 필드 설정
+        return '[' + str(self.pk) + ']' + self.user.first_name + ' ' + self.user.last_name
 
 ###################################################################################################
 
@@ -103,12 +106,12 @@ class bf_UserCredit(models.Model):
 class bf_Book(models.Model):
     id = models.AutoField(primary_key=True)
     book_date = models.DateTimeField(blank=False, null=False, verbose_name='예약일')
-    
+
     # user_id = models.ForeignKey("auth_user", related_name="user", on_delete=models.CASCADE, db_column="user_id")
     # user_id = models.IntegerField(blank=False, null=False, verbose_name='user_id')
     # class_id = models.IntegerField(blank=False, null=False, verbose_name='class_id')
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column="user_id")
-    class_id = models.ForeignKey(bf_Class, on_delete=models.CASCADE, db_column="class_id")
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, db_column="user_id")
+    class_id = models.ForeignKey(bf_Class, related_name="bf_Class", on_delete=models.CASCADE, db_column="class_id")
 
     enable = models.BooleanField(default=True, null=False, verbose_name='활성')
     spent_credit = models.IntegerField(blank=False, null=False, verbose_name='차감된 크레딧')
@@ -121,8 +124,8 @@ class bf_Book(models.Model):
         verbose_name = 'Book'
         verbose_name_plural = 'Book'
 
-    # def __str__(self):  # Django admin에서 표시될 필드 설정
-    #     return str(self.pk) + ' / ' + self.title + ' / ' + self.place + ' / ' + self.date.strftime("%Y-%m-%d")
+    def __str__(self):  # Django admin에서 표시될 필드 설정
+        return 'Book_id: ' + str(self.pk) + ' / ' + self.book_date.strftime("%Y-%m-%d") + ' / ' + self.user_id.phone_number + ' / ' + self.user_id.user.first_name + ' ' + self.user_id.user.last_name
 
 ###################################################################################################
 
