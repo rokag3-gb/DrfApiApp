@@ -1,4 +1,5 @@
-# Django with DRF (Django Rest Framework) practice project
+# DRF (Django Rest Framework) Practice
+2023.05
 
 - Django project name: DrfApiApp
 
@@ -38,7 +39,7 @@ views.py > BookListAPI 에서, 같은 수업(날짜, 시간, 종류, 장소)에 
 ![](md_contents/DRF-UserBook.png)
 
 - 수업 예약 Admin 보기: Django-admin에서 Book 전체 조회<br>
--> admin.py > bf_BookAdmin 클래스에서 search_fields 를 설정하여서 phone_number로 검색할 수 있도록 하는 부분 테스트 실패하여 반영하지 못하였습니다.
+-> admin.py > bf_BookAdmin 클래스에서 search_fields 를 설정하여서 phone_number로 검색할 수 있도록 하는 부분은 계속 테스트하다가 반영 하지 못함.
 ![](md_contents/Django-admin-Class.png)
 
 ## 돌아보기
