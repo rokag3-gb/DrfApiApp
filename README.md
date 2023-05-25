@@ -1,5 +1,5 @@
 # DRF (Django Rest Framework) Practice
-2023.05
+`2023.05`
 
 - Django project name: DrfApiApp
 
@@ -52,6 +52,8 @@ views.py > BookListAPI 에서, 같은 수업(날짜, 시간, 종류, 장소)에 
 1. views.py 는 Controller와 같은 개념. 2가지 패턴 (클래스 기반, 함수 기반) 으로 구현 가능하더라.
     - @api_view: 함수 기반 보기 작업을 위한 데코레이터
     - APIView: 클래스 기반 보기 작업을 위한 클래스
+
+1. views.py 안에서 비즈니스 로직을 담은 service layer를 어떻게 가져가야 하나 추가 학습이 필요함.
 
 1. Serializers.py에서 여러 serializer 들을 결합하여 직렬화 해주는 부분 잼있었다.
 
